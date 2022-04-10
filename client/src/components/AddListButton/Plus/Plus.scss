@@ -1,0 +1,31 @@
+.add-wrap {
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.add {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+
+}
+
+.horizontal {
+  height: 2px;
+  width: 12px;
+  background-color: #868686;
+  position: relative;
+  top: 50%;
+  transform: translateY(50%);
+}
+
+.vertical {
+  background-color: #868686;
+  width: 2px;
+  height: 12px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

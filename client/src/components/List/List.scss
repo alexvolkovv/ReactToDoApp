@@ -1,0 +1,50 @@
+.list {
+  margin-bottom: 30px;
+
+  &__add-button {
+    color: #868686;
+    &:hover {
+      color: black;
+
+      .horizontal, .vertical {
+        background-color: #000;
+      }
+    }
+  }
+  li {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    span {
+      flex: 1;
+    }
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+      .list-remove__btn {
+        opacity: 0.3;
+      }
+    }
+
+    &.active {
+      background: #FFFFFF;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+    i {
+      margin-right: 10px;
+      display: inline-flex;
+      svg {
+        width: 12px;
+        height: 14px;
+      }
+    }
+  }
+}
+
+.list li .list-remove__btn {
+  opacity: 0;
+  &:hover {
+    opacity: 0.8;
+  }
+}
