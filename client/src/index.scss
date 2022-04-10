@@ -18,22 +18,34 @@
     border-right: 1px solid #F1F1F1;
     padding: 60px 20px;
   }
-  &__list {
-    li {
-      display: flex;
-      align-items: center;
-      padding: 10px 12px;
-      cursor: pointer;
-      margin: 5px;
-      &.active {
-        background: #FFFFFF;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-      }
-      i {
-        margin-right: 10px;
-        display: inline-flex;
-      }
-    }
+
+}
+
+.field {
+  background: #FFFFFF;
+  border: 1px solid #EFEFEF;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 8px 12px;
+  width: 100%;
+  &:focus {
+    border-color: #dbdbdb;
   }
+}
+
+.button {
+  background: #4DD599;
+  border-radius: 4px;
+  padding: 10px 20px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background: darken(#4DD599, 10%);
+  }
+
+  &:active {
+    background: darken(#4DD599, 15%);
+  }
+
 }
