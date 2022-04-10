@@ -1,10 +1,26 @@
-import listSvg from './assets/img/list.svg'
 import List from './components/List/List'
-import Plus from './components/AddListButton/Plus/Plus'
-import React from 'react'
+import React, { useState } from 'react'
 import AddListButton from './components/AddListButton/AddListButton'
+import db from './assets/db.json'
 
 function App() {
+  const [lists, setLists] = useState(
+    db.lists.map((list) => {
+      const colors = db.colors.filter((color) => color.id === list.colorId)
+
+      return { ...list, color: colors[0].hex }
+    })
+  )
+
+  function onAddLists(obj) {
+    setLists([...lists, obj])
+  }
+
+  function onRemoveList(list) {
+    const newArr = lists.filter((currentList) => currentList.id !== list.id)
+
+    setLists(newArr)
+  }
   return (
     <div className="todo">
       <div className="todo__sidebar">
@@ -31,58 +47,11 @@ function App() {
           isRemovable={false}
         />
 
-        <List
-          lists={[
-            {
-              color: 'green',
-              name: 'Покупки',
-              active: true,
-            },
-            {
-              color: 'blue',
-              name: 'Покупки',
-            },
-            {
-              color: 'pink',
-              name: 'Кино',
-            },
-          ]}
-        />
+        <List lists={lists} isRemovable={true} onRemove={onRemoveList} />
         <AddListButton
-          colors={[
-            {
-              id: 0,
-              hex: '#C9D1D3',
-            },
-            {
-              id: 1,
-              hex: '#42B883',
-            },
-            {
-              id: 2,
-              hex: '#64C4ED',
-            },
-            {
-              id: 3,
-              hex: '#FFBBCC',
-            },
-            {
-              id: 4,
-              hex: '#B6E6BD',
-            },
-            {
-              id: 5,
-              hex: '#C355F5',
-            },
-            {
-              id: 6,
-              hex: '#09011A',
-            },
-            {
-              id: 7,
-              hex: '#FF6464',
-            },
-          ]}
+          lists={lists}
+          onAddLists={onAddLists}
+          colors={db.colors}
         />
       </div>
     </div>

@@ -4,8 +4,25 @@ import Circle from '../../Circle/Circle'
 import closeImage from '../../../assets/img/close.svg'
 
 const AddListPopup = (props) => {
-  const { colors, setVisiblePopup } = props
+  const { colors, setVisiblePopup, lists, onAddLists } = props
   const [selectedColor, selectColor] = useState(colors[0].id)
+  const [folderName, setFolderName] = useState('')
+
+  function addNewFolder(folderName) {
+    if (!folderName) {
+      alert('Введите название списка')
+      return
+    }
+    let obj = {
+      id: lists[lists.length - 1]?.id + 1 || 0,
+      name: folderName,
+      colorId: selectedColor,
+      color: colors.filter((color) => color.id === selectedColor)[0].hex,
+    }
+
+    onAddLists(obj)
+    setVisiblePopup(false)
+  }
   return (
     <div className={'add-list-popup'}>
       <img
@@ -16,7 +33,15 @@ const AddListPopup = (props) => {
           setVisiblePopup(false)
         }}
       />
-      <input type="text" placeholder={'Название папки'} className={'field'} />
+      <input
+        type="text"
+        placeholder={'Название папки'}
+        className={'field'}
+        value={folderName}
+        onChange={(e) => {
+          setFolderName(e.target.value)
+        }}
+      />
       <ul className={'colors'}>
         {colors.map((color) => (
           <li key={color.id}>
@@ -30,7 +55,14 @@ const AddListPopup = (props) => {
           </li>
         ))}
       </ul>
-      <button className={'button'}>Добавить</button>
+      <button
+        onClick={() => {
+          addNewFolder(folderName)
+        }}
+        className={'button'}
+      >
+        Добавить
+      </button>
     </div>
   )
 }

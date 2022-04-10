@@ -4,8 +4,8 @@ import List from '../List/List'
 import AddListPopup from './AddListPopup/AddListPopup'
 
 const AddListButton = (props) => {
-  const { colors } = props
-  const [visiblePopup, setVisiblePopup] = useState(true)
+  const { colors, lists, onAddLists } = props
+  const [visiblePopup, setVisiblePopup] = useState(false)
 
   return (
     <div>
@@ -22,7 +22,12 @@ const AddListButton = (props) => {
         ]}
       />
       {visiblePopup && (
-        <AddListPopup colors={colors} setVisiblePopup={setVisiblePopup} />
+        <AddListPopup
+          colors={colors}
+          lists={lists}
+          onAddLists={onAddLists}
+          setVisiblePopup={setVisiblePopup}
+        />
       )}
     </div>
   )
