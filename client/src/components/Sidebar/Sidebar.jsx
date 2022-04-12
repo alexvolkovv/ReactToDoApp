@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import List from '../List/List'
 import AddListButton from '../AddListButton/AddListButton'
 import './Sidebar.scss'
 import axios from 'axios'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Sidebar = (props) => {
   const { lists, setLists, colors, tasks, setActiveList, activeList } = props
+  let navigate = useNavigate()
+  let location = useLocation()
+
+  useEffect(() => {
+    let listId = +location.pathname.split('lists/')[1]
+
+    setActiveList(lists?.find((list) => list.id === listId))
+  }, [lists, location.pathname])
 
   function onAddLists(obj) {
     setLists([...lists, obj])
@@ -17,6 +26,7 @@ const Sidebar = (props) => {
       setLists(newArr)
     })
   }
+
   return (
     <div className="todo__sidebar">
       <List
@@ -41,6 +51,10 @@ const Sidebar = (props) => {
           },
         ]}
         isRemovable={false}
+        onClick={(list) => {
+          navigate(`/`)
+          setActiveList(list)
+        }}
       />
 
       <List
@@ -49,9 +63,8 @@ const Sidebar = (props) => {
         onRemove={onRemoveList}
         tasks={tasks}
         onClick={(list) => {
-          console.log(list)
+          navigate(`/lists/${list.id}`)
           setActiveList(list)
-          console.log(activeList)
         }}
         activeList={activeList}
       />

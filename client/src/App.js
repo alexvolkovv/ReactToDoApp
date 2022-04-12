@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Tasks from './components/Tasks/Tasks'
 import Sidebar from './components/Sidebar/Sidebar'
 import axios from 'axios'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 function App() {
   const [lists, setLists] = useState([])
   const [colors, setColors] = useState([])
   const [tasks, setTasks] = useState([])
   const [activeList, setActiveList] = useState(null)
+  let navigate = useNavigate()
 
   useEffect(() => {
     axios.get('http://localhost:3001/lists').then((res) => {
@@ -42,6 +44,8 @@ function App() {
     setTasks(newTasks)
   }
 
+  console.log(navigate)
+
   return (
     <div className="todo">
       <Sidebar
@@ -53,12 +57,36 @@ function App() {
         activeList={activeList}
         setActiveList={setActiveList}
       />
-      <Tasks
-        list={lists && activeList && activeList}
-        tasks={tasks}
-        onEditTitle={onEditTitle}
-        onAddTask={onAddTask}
-      />
+      <div className="todo__tasks">
+        <Routes>
+          <Route
+            path={'/'}
+            exact={true}
+            element={lists.map((list) => (
+              <Tasks
+                list={list}
+                tasks={tasks}
+                onEditTitle={onEditTitle}
+                onAddTask={onAddTask}
+                lists={lists}
+                withoutEmpty={true}
+              />
+            ))}
+          />
+          <Route
+            path={'/lists/:id'}
+            element={
+              <Tasks
+                list={lists && activeList}
+                tasks={tasks}
+                onEditTitle={onEditTitle}
+                onAddTask={onAddTask}
+                lists={lists}
+              />
+            }
+          />
+        </Routes>
+      </div>
     </div>
   )
 }

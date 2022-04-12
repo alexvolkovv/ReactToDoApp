@@ -1,10 +1,13 @@
 .todo__tasks {
-  flex: 1;
+  //flex: 1;
   padding: 60px;
-
+  //width: 60vw;
+  margin-left: 20vw;
 }
 
 .tasks {
+  //margin-left: 20vw;
+  margin-bottom: 50px;
   &__title {
     font-style: normal;
     font-weight: 700;
