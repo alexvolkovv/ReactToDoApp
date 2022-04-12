@@ -1,13 +1,24 @@
 const express = require('express')
+const { json } = require('express')
+const cors = require('cors')
 
-const PORT = 8080
+const colorRoutes = require('./Routes/ColorRoutes')
+const listRoutes = require('./Routes/ListRoutes')
+const taskRoutes = require('./Routes/TaskRoutes')
+
+const PORT = 3001
 const app = express()
 
-app.get('/test', (req, res) => {
-  res.json({
-    5: 'test',
+app.use(json())
+app.use(
+  cors({
+    'Access-Control-Allow-Origin': '*',
   })
-})
+)
+
+app.use(colorRoutes)
+app.use(listRoutes)
+app.use(taskRoutes)
 
 app.listen(PORT, () => {
   console.log('Server is working...')

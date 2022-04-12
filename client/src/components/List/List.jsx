@@ -4,20 +4,37 @@ import Circle from '../Circle/Circle'
 import removeImg from '../../assets/img/remove-list.svg'
 
 const List = (props) => {
-  const { lists, isRemovable, onClick, onRemove } = props
+  const { lists, isRemovable, onClick, onRemove, tasks, activeList } = props
+  function calcTaskCount(lists, tasks) {
+    lists.forEach((list) => {
+      list.taskCount = tasks?.filter(
+        (task) => task['list_id'] === list.id
+      ).length
+    })
+  }
 
+  calcTaskCount(lists, tasks)
   return (
     <ul className="list">
       {lists.map((list, index) => (
         <li
-          onClick={onClick}
+          onClick={() => onClick(list)}
           key={index}
-          className={`${list.active ? 'active' : ''} ${
-            list.className ? list.className : ''
-          }`}
+          className={`${
+            list.active
+              ? 'active'
+              : list.id === activeList?.id && list.id !== undefined
+              ? 'active'
+              : ''
+          } ${list.className ? list.className : ''}`}
         >
-          <i>{list.icon ? list.icon : <Circle color={list.color} />}</i>
-          <span>{list.name}</span>
+          <i>{list.icon ? list.icon : <Circle color={list.hex} />}</i>
+          <span>
+            {list.name +
+              (list?.taskCount !== 0 && list.taskCount !== undefined
+                ? ` (${list.taskCount})`
+                : '')}
+          </span>
           {isRemovable ? (
             <img
               onClick={() => {

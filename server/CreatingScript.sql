@@ -1,17 +1,16 @@
 -- COLOR
 create table color(
-	id serial not null,
-	hex varchar(7) not null
+    id serial not null,
+    hex varchar(7) not null
 );
 
 ALTER TABLE color ADD CONSTRAINT color_pk PRIMARY KEY (id);
 
-
 -- LIST
 create table list(
-	id serial not null,
-	name varchar(255) not null,
-	color_id int not null
+    id serial not null,
+    name varchar(255) not null,
+    color_id int not null
 );
 
 alter table list add constraint list_pk PRIMARY KEY (id);
@@ -20,16 +19,15 @@ alter table list add constraint list_fk foreign key (color_id) references color 
 
 -- TASK
 create table task(
-	id serial not null,
-	name varchar(255) not null,
-	list_id int not null
+    id serial not null,
+    name varchar(255) not null,
+    list_id int not null,
+    completed boolean not null default false
 );
 
 alter table task add constraint task_pk primary key (id);
 alter table task add constraint task_fk foreign key (list_id) references list (id);
 
-
-drop table todos;
 
 -- FIlling values
 insert into color(hex) values
@@ -52,4 +50,8 @@ insert into task(name, list_id) values
 ('Пробежать 1 км', 3),
 ('Прочитать всю википедию', 4),
 ('Посмотреть человека паука!', 5);
+
+--drop table task;
+--drop table list;
+--drop table color;
 

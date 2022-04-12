@@ -9,16 +9,9 @@
 
 .todo {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   font-size: 16px;
-  &__sidebar {
-    background-color: #E5E5E5;
-    width: 20vw;
-    height: 100vh;
-    border-right: 1px solid #F1F1F1;
-    padding: 60px 20px;
-  }
-
+  display: flex;
 }
 
 .field {
@@ -40,12 +33,25 @@
   color: #ffffff;
   border: none;
   cursor: pointer;
+
   &:hover {
     background: darken(#4DD599, 10%);
   }
-
   &:active {
     background: darken(#4DD599, 15%);
   }
-
+  
+  &-grey {
+    background-color: #F4F6F8;
+    color: #9C9C9C;
+    &:hover {
+      background: darken(#F4F6F8, 10%);
+    }
+    &:active {
+      background: darken(#F4F6F8, 15%);
+    }
+  }
+  &:disabled {
+    background: #d8d8d8;
+  }
 }
