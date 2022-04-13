@@ -23,8 +23,9 @@ const AddTaskForm = (props) => {
     setIsLoading(true)
     axios
       .post('http://localhost:3001/tasks', newTask)
-      .then(() => {
-        onAddTask(list.id, newTask)
+      .then((response) => {
+        console.log(response.data)
+        onAddTask(list.id, response.data)
       })
       .catch(() => {
         alert('Ошибка: задача не была добавлена')

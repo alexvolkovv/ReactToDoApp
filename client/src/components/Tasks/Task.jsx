@@ -32,10 +32,11 @@ const Task = (props) => {
   }
 
   return (
-    <div key={task.id} className="tasks__items-item">
+    <div className="tasks__items-item">
       <div className={'checkbox'}>
         <input
           onChange={() => {
+            console.log(task)
             updateTaskStatus(task)
           }}
           checked={completedStatus}
