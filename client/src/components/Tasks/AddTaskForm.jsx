@@ -24,7 +24,6 @@ const AddTaskForm = (props) => {
     axios
       .post('http://localhost:3001/tasks', newTask)
       .then((response) => {
-        console.log(response.data)
         onAddTask(list.id, response.data)
       })
       .catch(() => {

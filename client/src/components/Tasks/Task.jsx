@@ -25,8 +25,7 @@ const Task = (props) => {
 
         setTasks(newTasks)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         alert('Ошибка при изменении статуса задачи')
       })
   }
@@ -36,7 +35,6 @@ const Task = (props) => {
       <div className={'checkbox'}>
         <input
           onChange={() => {
-            console.log(task)
             updateTaskStatus(task)
           }}
           checked={completedStatus}

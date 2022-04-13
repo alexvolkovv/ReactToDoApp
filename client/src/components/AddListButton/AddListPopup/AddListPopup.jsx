@@ -29,7 +29,6 @@ const AddListPopup = (props) => {
         colorId: selectedColor,
       })
       .then(({ data }) => {
-        console.log(data)
         onAddLists(data)
         setVisiblePopup(false)
         setIsLoading(false)

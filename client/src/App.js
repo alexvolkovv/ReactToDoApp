@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Tasks from './components/Tasks/Tasks'
 import Sidebar from './components/Sidebar/Sidebar'
 import axios from 'axios'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
   const [lists, setLists] = useState([])
   const [colors, setColors] = useState([])
   const [tasks, setTasks] = useState([])
   const [activeList, setActiveList] = useState(null)
-  let navigate = useNavigate()
 
   useEffect(() => {
     axios.get('http://localhost:3001/lists').then((res) => {
@@ -39,12 +38,8 @@ function App() {
   function onAddTask(listId, taskObj) {
     const newTasks = [...tasks, taskObj]
 
-    console.log(newTasks)
-    console.log(taskObj)
     setTasks(newTasks)
   }
-
-  console.log(navigate)
 
   return (
     <div className="todo">
