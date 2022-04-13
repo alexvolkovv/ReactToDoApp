@@ -4,9 +4,11 @@ import axios from 'axios'
 import editImage from '../../assets/img/edit.svg'
 import './Tasks.scss'
 import AddTaskForm from './AddTaskForm'
+import Task from './Task'
+import { Link } from 'react-router-dom'
 
 const Tasks = (props) => {
-  const { list, tasks, onEditTitle, onAddTask, withoutEmpty } = props
+  const { list, tasks, onEditTitle, onAddTask, withoutEmpty, setTasks } = props
   function editTitle() {
     const newTitle = window.prompt('Название списка:', list?.name)
 
@@ -21,12 +23,55 @@ const Tasks = (props) => {
         })
     }
   }
+
+  function onRemove(removingTask) {
+    axios
+      .delete('http://localhost:3001/tasks/' + removingTask.id)
+      .then(() => {
+        const newTasks = tasks.filter((task) => removingTask.id !== task.id)
+
+        setTasks(newTasks)
+      })
+      .catch(() => {
+        alert('Ошибка: задача не была удалена')
+      })
+  }
+
+  function onEditTask(editingTask) {
+    const newText = window.prompt('Введите новое название:', editingTask.name)
+
+    if (!newText) {
+      return
+    }
+
+    axios
+      .patch('http://localhost:3001/tasks/' + editingTask.id, {
+        name: newText,
+        completed: editingTask.completed,
+      })
+      .then(() => {
+        const newTasks = tasks.map((task) => {
+          if (task.id === editingTask.id) {
+            task.name = newText
+          }
+
+          return task
+        })
+
+        setTasks(newTasks)
+      })
+      .catch(() => {
+        alert('Ошибка: задача не была изменена')
+      })
+  }
+
   return (
     <div className="tasks">
       <h2 className={'tasks__title'} style={{ color: list?.hex }}>
-        {list?.name}
+        <Link to={'/lists/' + list?.id}>{list?.name}</Link>
         <img onClick={editTitle} src={editImage} alt="Edit" />
       </h2>
+
       <div className="tasks__items">
         {list?.taskCount === 0 && !withoutEmpty ? (
           <h2 className={'tasks__items-subtitle'}>Задачи отсутствуют</h2>
@@ -34,34 +79,21 @@ const Tasks = (props) => {
           ''
         )}
         {tasks
-          .filter((item) => item['list_id'] === list?.id)
-          .map((item) => (
-            <div key={item.id} className="tasks__items-item">
-              <div className={'checkbox'}>
-                <input type="checkbox" name="" id={`task-id${item.id}`} />
-                <label htmlFor={`task-id${item.id}`}>
-                  <svg
-                    width="14"
-                    height="9"
-                    viewBox="0 0 11 8"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.29999 1.20001L3.79999 6.70001L1.29999 4.20001"
-                      stroke="#fff"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </label>
-              </div>
-              <input type="text" value={item.name} readOnly={true} />
-            </div>
+          .filter((task) => task['list_id'] === list?.id)
+          .map((task) => (
+            <Task
+              key={task.id}
+              task={task}
+              onRemove={() => onRemove(task)}
+              onEdit={() => {
+                onEditTask(task)
+              }}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
           ))}
       </div>
-      <AddTaskForm list={list} onAddTask={onAddTask} />
+      <AddTaskForm key={list?.id} list={list} onAddTask={onAddTask} />
     </div>
   )
 }

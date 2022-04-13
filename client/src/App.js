@@ -70,6 +70,7 @@ function App() {
                 onAddTask={onAddTask}
                 lists={lists}
                 withoutEmpty={true}
+                setTasks={setTasks}
               />
             ))}
           />
@@ -82,6 +83,7 @@ function App() {
                 onEditTitle={onEditTitle}
                 onAddTask={onAddTask}
                 lists={lists}
+                setTasks={setTasks}
               />
             }
           />

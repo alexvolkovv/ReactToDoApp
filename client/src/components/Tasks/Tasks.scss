@@ -6,6 +6,10 @@
 }
 
 .tasks {
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
   //margin-left: 20vw;
   margin-bottom: 50px;
   &__title {
@@ -95,18 +99,34 @@
     &-item {
       display: flex;
       align-items: center;
+      &:hover {
+        .task__actions-remove {
+          opacity:0.6;
+          &:hover {
+            opacity: 0.8;
+          }
+          &:active {
+            opacity: 0.7;
+          }
+        }
+        .task__actions-edit {
+          opacity: 0.6;
+          &:hover {
+            opacity: 0.8;
+          }
+          &:active {
+            opacity: 0.7;
+          }
+        }
+      }
 
-      input {
+      .task-content {
         margin-left: 15px;
-        border: 1px solid transparent;
         font-size: 16px;
         width: 100%;
         padding: 10px 5px;
         border-radius: 10px;
         transition: 0.2s all;
-        &:focus {
-          border: 1px solid #ccc;
-        }
       }
     }
   }
@@ -152,3 +172,20 @@
     }
   }
 }
+
+
+.task__actions {
+  display: flex;
+  align-items: center;
+  &-remove {
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &-edit {
+    opacity: 0;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+}
+

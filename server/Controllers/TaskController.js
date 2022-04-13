@@ -15,7 +15,7 @@ class TaskController {
 
   async removeTask(req, res) {
     try {
-      const sql = `delete from task where id = ${req.body.id};`
+      const sql = `delete from task where id = ${req.params.id};`
       const answer = await dataBase.query(sql)
 
       res.json(answer)
@@ -42,7 +42,7 @@ class TaskController {
 
   async updateTask(req, res) {
     try {
-      const sql = `update task set "name" = '${req.body.name}', completed = '${req.body.completed}' where id = ${req.body.id};`
+      const sql = `update task set "name" = '${req.body.name}', completed = '${req.body.completed}' where id = ${req.params.id};`
       const answer = await dataBase.query(sql)
 
       res.json(answer)

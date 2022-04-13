@@ -13,17 +13,26 @@ const Sidebar = (props) => {
   useEffect(() => {
     let listId = +location.pathname.split('lists/')[1]
 
-    setActiveList(lists?.find((list) => list.id === listId))
+    setActiveList(lists?.find((list) => list?.id === listId))
   }, [lists, location.pathname])
 
   function onAddLists(obj) {
     setLists([...lists, obj])
+    setActiveList(obj)
+    navigate('/lists/' + obj.id)
   }
 
   function onRemoveList(list) {
     axios.delete('http://localhost:3001/lists/' + list.id).then(() => {
+      let currentPath = location.pathname
+
       const newArr = lists.filter((currentList) => currentList.id !== list.id)
       setLists(newArr)
+      if (activeList?.id === list.id) {
+        navigate('/')
+      } else {
+        navigate(currentPath)
+      }
     })
   }
 
@@ -32,7 +41,7 @@ const Sidebar = (props) => {
       <List
         lists={[
           {
-            active: !activeList?.id,
+            active: location.pathname === '/',
             icon: (
               <svg
                 width="12"
